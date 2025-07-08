@@ -24,7 +24,7 @@ El informe técnico se encuentra dentro de la carpeta documentación
 
 ## Video
 
-//Link al video
+https://github.com/NikolasRamos/Proyecto-Capstone
 
 ## Autores
 
