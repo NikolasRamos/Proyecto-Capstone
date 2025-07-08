@@ -1,0 +1,353 @@
+[
+    {
+        "id": "3ab712a58630c04e",
+        "type": "tab",
+        "label": "Flujo 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5bff87fc29e8b86a",
+        "type": "tab",
+        "label": "Flujo 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "2c2574bbf6eb7f8d",
+        "type": "ui_tab",
+        "name": "Principal",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "a19249d1fa1c9a55",
+        "type": "ui_group",
+        "name": "Datos IoT",
+        "tab": "2c2574bbf6eb7f8d",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "768c83daa80fe1ca",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "5bfb38c466ececf9",
+        "type": "inject",
+        "z": "5bff87fc29e8b86a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 280,
+        "y": 280,
+        "wires": [
+            [
+                "ed65e6f7c14bbb90"
+            ]
+        ]
+    },
+    {
+        "id": "ed65e6f7c14bbb90",
+        "type": "http request",
+        "z": "5bff87fc29e8b86a",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://callback-iot.up.railway.app/data",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 490,
+        "y": 280,
+        "wires": [
+            [
+                "aad7ebad6c549a41"
+            ]
+        ]
+    },
+    {
+        "id": "aad7ebad6c549a41",
+        "type": "function",
+        "z": "5bff87fc29e8b86a",
+        "name": "Funcion filtrar 2",
+        "func": "let datos = msg.payload;\n\ndatos.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));\n\nlet ultimos = datos.slice(0,2);\n\nmsg.payload = ultimos;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 4,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 280,
+        "wires": [
+            [
+                "7f7a0b5018e64df5",
+                "7b7687179df8da70",
+                "f07c4675b9e9aa26"
+            ]
+        ]
+    },
+    {
+        "id": "7b7687179df8da70",
+        "type": "function",
+        "z": "5bff87fc29e8b86a",
+        "name": "Funcion extraer temperatura",
+        "func": "let ultimo = msg.payload[0];\nmsg.payload = parseFloat(ultimo.temperature);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 960,
+        "y": 220,
+        "wires": [
+            [
+                "091da3b6b66cee4c"
+            ]
+        ]
+    },
+    {
+        "id": "7f7a0b5018e64df5",
+        "type": "function",
+        "z": "5bff87fc29e8b86a",
+        "name": "Funcion extraer humedad",
+        "func": "let ultimo = msg.payload[0];\nmsg.payload = parseFloat(ultimo.humidity);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 280,
+        "wires": [
+            [
+                "c01268066bc960b4"
+            ]
+        ]
+    },
+    {
+        "id": "f07c4675b9e9aa26",
+        "type": "function",
+        "z": "5bff87fc29e8b86a",
+        "name": "Funcion extraer presion",
+        "func": "let ultimo = msg.payload[0];\nmsg.payload = parseFloat(ultimo.pressure);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 340,
+        "wires": [
+            [
+                "e348000d52041a2c"
+            ]
+        ]
+    },
+    {
+        "id": "091da3b6b66cee4c",
+        "type": "ui_gauge",
+        "z": "5bff87fc29e8b86a",
+        "name": "",
+        "group": "a19249d1fa1c9a55",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperatura",
+        "label": "°C",
+        "format": "{{value}} °C",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1190,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "c01268066bc960b4",
+        "type": "ui_gauge",
+        "z": "5bff87fc29e8b86a",
+        "name": "",
+        "group": "a19249d1fa1c9a55",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Humedad",
+        "label": "%",
+        "format": "{{value}} %",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1180,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "e348000d52041a2c",
+        "type": "ui_gauge",
+        "z": "5bff87fc29e8b86a",
+        "name": "",
+        "group": "a19249d1fa1c9a55",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Presion",
+        "label": "hPa",
+        "format": "{{value}} hPa",
+        "min": "950",
+        "max": "1050",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1180,
+        "y": 340,
+        "wires": []
+    }
+]
