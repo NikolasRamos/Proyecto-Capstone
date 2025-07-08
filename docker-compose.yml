@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  nodered:
+    image: nodered/node-red:latest
+    container_name: nodered
+    ports:
+      - "1880:1880"
+    volumes:
+      - ./data:/data
+    command: sh -c "npm install node-red-dashboard && npm install node-red-contrib-ui-led && npm install node-red-contrib-image-output && npm install node-red-node-pushover && npm install node-red-node-blinkstick && npm install node-red-node-random && node-red"
+    restart: always
